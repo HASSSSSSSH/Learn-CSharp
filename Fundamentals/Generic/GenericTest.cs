@@ -64,6 +64,14 @@ public class GenericTest
         Console.Out.WriteLine($"instance5.GetType().Name = {instance5.GetType().Name}");
         Console.Out.WriteLine($"instance6.GetType().Name = {instance6.GetType().Name}");
 
+        // 将 typeof(Class1<,>) 与 instance1 的类型进行比较
+        Console.Out.WriteLine(
+            $"(instance1.GetType() == typeof(Class1<,>)) = {instance1.GetType() == typeof(Class1<,>)}");
+
+        // 将 typeof(Class1<int, string>) 与 instance1 的类型进行比较
+        Console.Out.WriteLine(
+            $"(instance1.GetType() == typeof(Class1<int, string>)) = {instance1.GetType() == typeof(Class1<int, string>)}");
+
         // 比较 instance1 和 instance2 的类型
         Console.Out.WriteLine(
             $"(instance1.GetType() == instance2.GetType()) = {instance1.GetType() == instance2.GetType()}");
