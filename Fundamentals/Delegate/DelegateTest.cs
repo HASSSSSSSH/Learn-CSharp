@@ -105,6 +105,45 @@ public class DelegateTest
         Console.Out.WriteLine($"{TAG}: TestMethod5, apply = \"{multiply}\"");
     }
 
+    [TestMethod]
+    public void TestMethod6()
+    {
+        double Addition(double d)
+        {
+            Console.WriteLine("Addition");
+            return d + d;
+        }
+
+        double Multiplication(double d)
+        {
+            Console.WriteLine("Multiplication");
+            return d * d;
+        }
+
+        // 测试 += 操作符
+        Class2.Functions += Addition;
+        Class2.Functions += Multiplication;
+        Class2.Apply(3f);
+
+        // 测试 -= 操作符
+        Class2.Functions -= Multiplication;
+        Class2.Apply(4f);
+
+        // 测试 = 操作符
+        Class2.Functions = delegate(double d)
+        {
+            Console.WriteLine("Division");
+            return d / 2;
+        };
+        Class2.Apply(5f);
+        Class2.Functions += Addition;
+        Class2.Apply(6f);
+
+        // 令 Class2.Functions = null
+        Class2.Functions = null;
+        Class2.Apply(7f);
+    }
+
     private static double TempFunction(double x)
     {
         return x * x;
