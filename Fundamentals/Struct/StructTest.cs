@@ -7,17 +7,26 @@ public class StructTest
 {
     private const string TAG = "StructTest";
 
+    /// <summary>
+    /// 结构的初始化和默认值
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
-        TempStruct instance1 = new TempStruct(1, "S");
-        Console.WriteLine($"{TAG}: TestMethod1, instance1.ToString() = {instance1.ToString()}");
+        SampleStruct struct1 = new SampleStruct();
+        Console.WriteLine($"{TAG}: struct1.ToString() = {struct1.ToString()}");
 
-        TempStruct instance2 = instance1;
-        instance2.X = 100;
-        instance2.Y = "AAA";
-        Console.WriteLine($"{TAG}: TestMethod1, instance1.ToString() = {instance1.ToString()}");
-        Console.WriteLine($"{TAG}: TestMethod1, instance2.ToString() = {instance2.ToString()}");
+        SampleStruct struct2 = default(SampleStruct);
+        Console.WriteLine($"{TAG}: struct2.ToString() = {struct2.ToString()}");
+
+        SampleStruct struct3 = new SampleStruct(1, "SS");
+        Console.WriteLine($"{TAG}: struct3.ToString() = {struct3.ToString()}");
+
+        SampleStruct struct4 = struct3;
+        struct2.X = 100;
+        struct2.Y = "AAA";
+        Console.WriteLine($"{TAG}: struct3.ToString() = {struct3.ToString()}");
+        Console.WriteLine($"{TAG}: struct4.ToString() = {struct4.ToString()}");
     }
 
     /// <summary>
@@ -26,31 +35,26 @@ public class StructTest
     [TestMethod]
     public void TestMethod2()
     {
-        TempStruct instance1 = new TempStruct(1, "S");
-        TempStruct instance2 = new TempStruct(100, "AAA");
-        Console.WriteLine($"{TAG}: TestMethod2, instance1.Equals(instance2) = {instance1.Equals(instance2)}");
+        SampleStruct struct1 = new SampleStruct(1, "S");
+        SampleStruct struct2 = new SampleStruct(100, "AAA");
+        Console.WriteLine($"{TAG}: struct1.Equals(struct2) = {struct1.Equals(struct2)}");
 
-        instance1.X = 100;
-        instance1.Y = "AAA";
-        Console.WriteLine($"{TAG}: TestMethod2, instance1.Equals(instance2) = {instance1.Equals(instance2)}");
+        struct1.X = 100;
+        struct1.Y = "AAA";
+        Console.WriteLine($"{TAG}: struct1.Equals(struct2) = {struct1.Equals(struct2)}");
     }
 
-    struct TempStruct
+    /// <summary>
+    /// readonly 结构
+    /// </summary>
+    [TestMethod]
+    public void TestMethod3()
     {
-        private const string TAG = "TempStruct";
+        ReadonlyStruct struct1 = new ReadonlyStruct(1, "SS");
 
-        public int X { get; set; }
-        public string Y { get; set; }
+        // 不能修改 readonly 结构的成员
+        // struct1.Y = "";
 
-        public TempStruct(int x, string y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public override string ToString()
-        {
-            return $"{TAG}: X = {X}, Y = {Y}";
-        }
+        Console.WriteLine($"{TAG}: struct1.ToString() = {struct1.ToString()}");
     }
 }

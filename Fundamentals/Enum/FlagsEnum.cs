@@ -5,7 +5,7 @@ namespace Fundamentals.Enum;
 /// 若要指示枚举类型声明位字段, 必须对其应用特性 Flags
 /// </summary>
 [Flags]
-public enum Enum2
+public enum FlagsEnum
 {
     // 0
     None = 0b_0000_0000,

@@ -7,74 +7,55 @@ public class ClassTest
 {
     private const string TAG = "ClassTest";
 
+    /// <summary>
+    /// 创建类的实例
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
-        TempClass instance1 = new TempClass(1, "S");
-        Console.WriteLine($"{TAG}: TestMethod1, instance1.ToString() = {instance1.ToString()}");
+        // 使用 new 运算符创建 SampleClass 的实例
+        SampleClass instance1 = new SampleClass(1, "ss");
+        Console.WriteLine($"{TAG}: instance1.ToString() = {instance1.ToString()}");
 
-        TempClass instance2 = instance1;
-        instance2.X = 100;
+        // 为变量 instance2 分配对象
+        SampleClass instance2 = instance1;
+        instance2.X = 10;
         instance2.Y = "AAA";
-        Console.WriteLine($"{TAG}: TestMethod1, instance1.ToString() = {instance1.ToString()}");
-        Console.WriteLine($"{TAG}: TestMethod1, instance2.ToString() = {instance2.ToString()}");
+        Console.WriteLine($"{TAG}: instance1.ToString() = {instance1.ToString()}");
+        Console.WriteLine($"{TAG}: instance2.ToString() = {instance2.ToString()}");
+
+        // 向方法传入引用
+        LocalFunction(instance2);
+
+        void LocalFunction(SampleClass instance)
+        {
+            // 为变量 instance 分配新的对象
+            instance = new SampleClass(100, "ZZZ");
+
+            Console.WriteLine($"{TAG}: instance.ToString() = {instance.ToString()}");
+            Console.WriteLine($"{TAG}: instance1.ToString() = {instance1.ToString()}");
+            Console.WriteLine($"{TAG}: instance2.ToString() = {instance2.ToString()}");
+        }
     }
 
     /// <summary>
-    /// 相等性比较
+    /// 类的相等性比较
     /// </summary>
     [TestMethod]
     public void TestMethod2()
     {
-        TempClass instance1 = new TempClass(1, "S");
-        TempClass instance2 = instance1;
-        Console.WriteLine($"{TAG}: TestMethod2, instance1 == instance2 = {instance1 == instance2}");
-        Console.WriteLine($"{TAG}: TestMethod2, instance1.Equals(instance2) = {instance1.Equals(instance2)}");
+        SampleClass instance1 = new SampleClass(1, "AAA");
+        SampleClass instance2 = instance1;
+        Console.WriteLine($"{TAG}: (instance1 == instance2) = {instance1 == instance2}");
+        Console.WriteLine($"{TAG}: instance1.Equals(instance2) = {instance1.Equals(instance2)}");
 
-        TempClass instance3 = new TempClass(100, "AAA");
-        Console.WriteLine($"{TAG}: TestMethod2, instance1 == instance3 = {instance1 == instance3}");
-        Console.WriteLine($"{TAG}: TestMethod2, instance1.Equals(instance3) = {instance1.Equals(instance3)}");
+        SampleClass instance3 = new SampleClass(10, "ZZZ");
+        Console.WriteLine($"{TAG}: (instance1 == instance3) = {instance1 == instance3}");
+        Console.WriteLine($"{TAG}: instance1.Equals(instance3) = {instance1.Equals(instance3)}");
 
         instance3.X = 1;
-        instance3.Y = "S";
-        Console.WriteLine($"{TAG}: TestMethod2, instance1 == instance3 = {instance1 == instance3}");
-        Console.WriteLine($"{TAG}: TestMethod2, instance1.Equals(instance3) = {instance1.Equals(instance3)}");
-    }
-
-    class TempClass
-    {
-        private const string TAG = "TempClass";
-
-        public int X { get; set; }
-        public string Y { get; set; }
-
-        public TempClass(int x, string y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public override string ToString()
-        {
-            return $"{TAG}: X = {X}, Y = {Y}";
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (ReferenceEquals(obj, null))
-            {
-                return false;
-            }
-
-            if (obj is TempClass tempClass)
-            {
-                if (tempClass.X != this.X || tempClass.Y != this.Y)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        instance3.Y = "AAA";
+        Console.WriteLine($"{TAG}: (instance1 == instance3) = {instance1 == instance3}");
+        Console.WriteLine($"{TAG}: instance1.Equals(instance3) = {instance1.Equals(instance3)}");
     }
 }

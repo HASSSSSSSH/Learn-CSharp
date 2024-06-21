@@ -1,20 +1,26 @@
 namespace Fundamentals.Delegate;
 
+/// <summary>
+/// 用于测试多播委托的类
+/// </summary>
 public class Class2
 {
     private const string TAG = "Class2";
 
-    public delegate double Function(double x);
+    // 声明一个委托
+    public delegate int PerformCalculation(int x, int y);
 
-    public static Function? Functions { get; set; }
+    // 声明一个自动实现的委托属性
+    public static PerformCalculation? Functions { get; set; }
 
-    public static void Apply(double x)
+    // 静态方法, 用于使用委托属性 Functions
+    public static void Apply(int x, int y)
     {
-        double? res = Functions?.Invoke(x);
+        double? result = Functions?.Invoke(x, y);
 
-        if (res != null)
+        if (result != null)
         {
-            Console.Out.WriteLine($"{TAG}: Apply(double), res = {res}");
+            Console.Out.WriteLine($"{TAG}: Apply(int, int), result = {result}");
         }
     }
 }

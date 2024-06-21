@@ -7,31 +7,43 @@ public class DelegateTest
 {
     private const string TAG = "DelegateTest";
 
+    /// <summary>
+    /// 实例化和使用委托
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
         double a = 2.0;
 
+        // 使用 new 运算符实例化委托
         Class1.Function f1 = new Class1.Function(delegate(double x)
         {
             x += 0.1;
             return x;
         });
+
+        // 使用匿名函数实例化委托
         Class1.Function f2 = delegate(double x)
         {
             x += 0.2;
             return x;
         };
+
+        // 使用 new 运算符和 Lambda 表达式实例化委托
         Class1.Function f3 = new Class1.Function((x) =>
         {
             x += 0.3;
             return x;
         });
+
+        // 使用 Lambda 表达式实例化委托
         Class1.Function f4 = (x) =>
         {
             x += 0.4;
             return x;
         };
+
+        // 使用 Lambda 表达式实例化委托
         Class1.Function f5 = x =>
         {
             x += 0.5;
@@ -43,118 +55,110 @@ public class DelegateTest
         string apply3 = Class1.Apply(a, f3);
         string apply4 = Class1.Apply(a, f4);
         string apply5 = Class1.Apply(a, f5);
+        Console.Out.WriteLine($"{TAG}: apply1 = \"{apply1}\"");
+        Console.Out.WriteLine($"{TAG}: apply2 = \"{apply2}\"");
+        Console.Out.WriteLine($"{TAG}: apply3 = \"{apply3}\"");
+        Console.Out.WriteLine($"{TAG}: apply4 = \"{apply4}\"");
+        Console.Out.WriteLine($"{TAG}: apply5 = \"{apply5}\"");
 
         // 使用 Lambda 表达式来创建匿名函数
-        string squares = Class1.Apply(a, x => x * x);
+        string apply6 = Class1.Apply(a, x => x * x);
+        Console.Out.WriteLine($"{TAG}: apply6 = \"{apply6}\"");
 
-        Console.Out.WriteLine($"{TAG}: TestMethod1, apply1 = \"{apply1}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, apply2 = \"{apply2}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, apply3 = \"{apply3}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, apply4 = \"{apply4}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, apply5 = \"{apply5}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, apply6 = \"{squares}\"");
+        // 使用静态方法
+        string apply7 = Class1.Apply(a, Class1.Sqrt);
+        Console.Out.WriteLine($"{TAG}: apply7 = \"{apply7}\"");
+
+        // 使用实例方法
+        Class1 instance = new Class1(10);
+        string apply8 = Class1.Apply(a, instance.SampleFunction);
+        Console.Out.WriteLine($"{TAG}: apply8 = \"{apply8}\"");
+
+        // 使用本地函数
+        string apply9 = Class1.Apply(a, LocalFunction);
+        Console.Out.WriteLine($"{TAG}: apply9 = \"{apply9}\"");
+
+        // 本地函数
+        double LocalFunction(double x)
+        {
+            return x * x * x;
+        }
     }
 
+    /// <summary>
+    /// 通过 new 运算符的嵌套来实例化委托
+    /// </summary>
     [TestMethod]
     public void TestMethod2()
     {
-        double a = 2.0;
+        double a = 3.14 / 2;
 
-        Class1.Function f1 = new Class1.Function(TempFunction);
-        Class1.Function f2 = new Class1.Function(new Class1.Function(TempFunction));
-        Class1.Function f3 = new Class1.Function(new Class1.Function(new Class1.Function(TempFunction)));
+        Class1.Function f1 = new Class1.Function(Math.Sin);
+        Class1.Function f2 = new Class1.Function(new Class1.Function(Math.Sin));
+        Class1.Function f3 = new Class1.Function(new Class1.Function(new Class1.Function(Math.Sin)));
 
         string apply1 = Class1.Apply(a, f1);
         string apply2 = Class1.Apply(a, f2);
         string apply3 = Class1.Apply(a, f3);
 
-        Console.Out.WriteLine($"{TAG}: TestMethod2, apply1 = \"{apply1}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod2, apply2 = \"{apply2}\"");
-        Console.Out.WriteLine($"{TAG}: TestMethod2, apply3 = \"{apply3}\"");
+        Console.Out.WriteLine($"{TAG}: apply1 = \"{apply1}\"");
+        Console.Out.WriteLine($"{TAG}: apply2 = \"{apply2}\"");
+        Console.Out.WriteLine($"{TAG}: apply3 = \"{apply3}\"");
     }
 
+    /// <summary>
+    /// 使用多播委托
+    /// </summary>
     [TestMethod]
     public void TestMethod3()
     {
-        double a = 2.0;
-
-        double temp(double x)
+        int Addition(int x, int y)
         {
-            return x * x * x;
+            int result = x + y;
+            Console.WriteLine($"Addition, result = {result}");
+            return result;
         }
 
-        string apply = Class1.Apply(a, temp);
-
-        Console.Out.WriteLine($"{TAG}: TestMethod3, apply = \"{apply}\"");
-    }
-
-    [TestMethod]
-    public void TestMethod4()
-    {
-        double a = 3.14 / 2;
-        string sines = Class1.Apply(a, Math.Sin);
-        Console.Out.WriteLine($"{TAG}: TestMethod4, apply = \"{sines}\"");
-    }
-
-    [TestMethod]
-    public void TestMethod5()
-    {
-        double a = 2.0;
-        TempClass instance = new TempClass(1.1);
-        string multiply = Class1.Apply(a, instance.Multiply);
-        Console.Out.WriteLine($"{TAG}: TestMethod5, apply = \"{multiply}\"");
-    }
-
-    [TestMethod]
-    public void TestMethod6()
-    {
-        double Addition(double d)
+        int Multiplication(int x, int y)
         {
-            Console.WriteLine("Addition");
-            return d + d;
+            int result = x * y;
+            Console.WriteLine($"Multiplication, result = {result}");
+            return result;
         }
 
-        double Multiplication(double d)
-        {
-            Console.WriteLine("Multiplication");
-            return d * d;
-        }
-
-        // 测试 += 操作符
+        // 使用 += 操作符
         Class2.Functions += Addition;
         Class2.Functions += Multiplication;
-        Class2.Apply(3f);
+        Apply(20, 2);
 
-        // 测试 -= 操作符
+        // 使用 -= 操作符
         Class2.Functions -= Multiplication;
-        Class2.Apply(4f);
+        Apply(20, 2);
 
-        // 测试 = 操作符
-        Class2.Functions = delegate(double d)
+        // 使用 = 操作符
+        Class2.Functions = (int x, int y) =>
         {
-            Console.WriteLine("Division");
-            return d / 2;
+            if (y == 0)
+            {
+                return 0;
+            }
+
+            int result = x / y;
+            Console.WriteLine($"Division, result = {result}");
+            return result;
         };
-        Class2.Apply(5f);
+        Apply(20, 2);
         Class2.Functions += Addition;
-        Class2.Apply(6f);
+        Apply(20, 2);
 
         // 令 Class2.Functions = null
         Class2.Functions = null;
-        Class2.Apply(7f);
-    }
+        Apply(20, 2);
 
-    private static double TempFunction(double x)
-    {
-        return x * x;
-    }
-
-    class TempClass
-    {
-        double factor;
-
-        public TempClass(double factor) => this.factor = factor;
-
-        public double Multiply(double x) => x * factor;
+        void Apply(int x, int y)
+        {
+            Class2.Apply(x, y);
+            Console.WriteLine();
+        }
     }
 }
