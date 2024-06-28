@@ -7,30 +7,52 @@ public class PropertyTest
 {
     private const string TAG = "PropertyTest";
 
+    /// <summary>
+    /// 属性的使用
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
-        Class1 instance1 = new Class1(10, 100, 1000);
-        instance1.Method1();
+        // 直接使用静态属性
+        Console.WriteLine($"{TAG}: (++Class1.Index) = {++Class1.Index}");
+
+        Class1 instance = new Class1(111, "Jay");
+
+        // A 是读写属性
+        instance.A = 777;
+        Console.WriteLine($"{TAG}: instance.A = {instance.A}");
+
+        // B 是只读属性
+        Console.WriteLine($"{TAG}: instance.B = {instance.B}");
+        // instance.B = 0;
+
+        // 调用 UserId 属性的 get 访问器
+        Console.WriteLine($"{TAG}: instance.UserId = {instance.UserId}");
+
+        // Id 是只写属性
+        instance.Id = 100;
+        // Console.WriteLine($"{TAG}: instance.Id = {instance.Id}");
+
+        // 再次调用 UserId 属性的 get 访问器
+        Console.WriteLine($"{TAG}: instance.UserId = {instance.UserId}");
+
+        // 此处不能直接调用属性 Name 的私有 get 访问器
+        // Console.WriteLine($"{TAG}: instance.Name = {instance.Name}");
+        instance.Test();
     }
 
+    /// <summary>
+    /// 使用 virtual 和 abstract 属性
+    /// </summary>
     [TestMethod]
     public void TestMethod2()
     {
-        Class3 instance1 = new Class3();
-        instance1.A = 10;
-        instance1.B = 100;
-        Console.WriteLine($"{TAG}: TestMethod2(), instance1.A = {instance1.A}, instance1.B = {instance1.B}");
-    }
-
-    [TestMethod]
-    public void TestMethod3()
-    {
-        Class4 instance1 = new Class4
+        Class3 instance = new Class3(666)
         {
-            A = 10,
-            B = 100
+            // 通过对象初始值设定项使用 Index 属性的 init 访问器
+            Index = 11
         };
-        Console.WriteLine($"{TAG}: TestMethod3(), instance1.A = {instance1.A}, instance1.B = {instance1.B}");
+
+        Console.WriteLine($"{TAG}: instance.Id = {instance.Id}, instance.Index = {instance.Index}");
     }
 }

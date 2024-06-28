@@ -1,25 +1,28 @@
 namespace Fundamentals.Generic;
 
+/// <summary>
+/// Class2 继承自 Class1
+/// 将 Class2 的类型参数 K 和 V 指定给 Class1 的类型参数 A 和 B
+/// </summary>
 public class Class2<K, V> : Class1<K, V>
 {
-    private const string TAG = "Class2<T1, T2>";
+    private const string TAG = "Class2<K, V>";
 
     private Dictionary<K, V> dictionary = new Dictionary<K, V>();
 
     /// <summary>
-    /// 方法的类型参数 K 与类的类型参数 K 不同
+    /// Method1[k](k) 是泛型方法, 继承自 Class1`2[K,V]
+    /// 比较方法的类型参数 K 和类的类型参数 K
     /// </summary>
     public override void Method1<K>(K key)
     {
-        base.Method1(key);
-
-        Console.Out.WriteLine($"{TAG}: Method1<K>(K), typeof(K) = {typeof(K)}");
+        Console.Out.WriteLine($"{TAG}: Method1[K](K), typeof(K) = {typeof(K)}");
 
         if (dictionary.Count > 0)
         {
             Type outerTypeK = dictionary.Keys.GetEnumerator().Current!.GetType();
-            Console.Out.WriteLine($"{TAG}: Method1<K>(K), outerTypeK = {outerTypeK}");
-            Console.Out.WriteLine($"{TAG}: Method1<K>(K), (outerTypeK == typeof(K)) = {outerTypeK == typeof(K)}");
+            Console.Out.WriteLine($"{TAG}: Method1[K](K), outerTypeK = {outerTypeK}");
+            Console.Out.WriteLine($"{TAG}: Method1[K](K), (outerTypeK == typeof(K)) = {outerTypeK == typeof(K)}");
         }
     }
 
@@ -28,8 +31,6 @@ public class Class2<K, V> : Class1<K, V>
     /// </summary>
     public void Method1(K key)
     {
-        base.Method1(key);
-
         Console.Out.WriteLine($"{TAG}: Method1(K), typeof(K) = {typeof(K)}");
 
         base.X = key!;

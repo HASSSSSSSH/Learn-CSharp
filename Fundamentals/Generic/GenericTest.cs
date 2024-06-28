@@ -7,33 +7,45 @@ public class GenericTest
 {
     private const string TAG = "GenericTest";
 
+    /// <summary>
+    /// 泛型类和泛型方法的使用
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
-        Class1<int, string> class1 = new Class1<int, string>(1, "100");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, class1.X.GetType() = {class1.X.GetType()}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, class1.Y!.GetType() = {class1.Y!.GetType()}");
-        class1.Method1<char>('c');
+        Class1<int, string> class1 = new Class1<int, string>(100, "ZZZ");
+        Console.Out.WriteLine($"{TAG}: class1.X.GetType() = {class1.X.GetType()}");
+        Console.Out.WriteLine($"{TAG}: class1.Y!.GetType() = {class1.Y!.GetType()}");
+        class1.Method1<char>('a');
         class1.Method1(10);
-        class1.Method1("S");
+        class1.Method1("AAA");
     }
 
+    /// <summary>
+    /// 泛型类和泛型方法的使用
+    /// </summary>
     [TestMethod]
     public void TestMethod2()
     {
         Class2<int, string> class2 = new Class2<int, string>();
-        class2.Add(1, "1");
+        class2.Add(100, "ZZZ");
         class2.Method1<char>('c');
-        class2.Method1(100);
+        class2.Method1(1);
     }
 
+    /// <summary>
+    /// 泛型类的使用
+    /// </summary>
     [TestMethod]
     public void TestMethod3()
     {
         Class3<string> class3 = new Class3<string>();
-        class3.Method1("S");
+        class3.Method1("AAA");
     }
 
+    /// <summary>
+    /// 泛型类和泛型方法的使用
+    /// </summary>
     [TestMethod]
     public void TestMethod4()
     {
@@ -41,6 +53,9 @@ public class GenericTest
         class4.Method1<char>('c');
     }
 
+    /// <summary>
+    /// 泛型的类型检查
+    /// </summary>
     [TestMethod]
     public void TestMethod5()
     {
@@ -78,12 +93,17 @@ public class GenericTest
         Console.Out.WriteLine(
             $"(instance1.GetType().Name == instance2.GetType().Name) = {instance1.GetType().Name == instance2.GetType().Name}");
 
+        // 使用 is 运算符来执行类型检查
+        Console.Out.WriteLine($"instance3 is Class2<int, string> = {instance3 is Class2<int, string>}");
         Console.Out.WriteLine($"instance3 is Class1<int, string> = {instance3 is Class1<int, string>}");
         Console.Out.WriteLine($"instance4 is Class1<int, string> = {instance4 is Class1<int, string>}");
         Console.Out.WriteLine($"instance5 is Class1<string, string> = {instance5 is Class1<string, string>}");
         Console.Out.WriteLine($"instance6 is Class1<int, string> = {instance6 is Class1<int, string>}");
     }
 
+    /// <summary>
+    /// 泛型的类型转换
+    /// </summary>
     [TestMethod]
     public void TestMethod6()
     {
@@ -94,18 +114,19 @@ public class GenericTest
         Class1<Class1<string, string>, Class1<int, string>> class1 =
             new Class1<Class1<string, string>, Class1<int, string>>(class3, class4);
 
-        // 调用 Class1<A, B>.Method1<A>(A)
+        // 调用 Class1`2[A, B].Method1[A](A) 并将 Class2 隐式转换为 Class1
         class1.Method1<Class1<char, char>>(new Class2<char, char>());
         Console.Out.WriteLine();
 
-        if (class1.X is Class3<string> instance)
+        // 使用 is 运算符对 class1.X 执行类型检查
+        if (class1.X is Class3<string> _class3)
         {
-            // 调用 Class3<T>.Method1(T)
-            instance.Method1("S");
+            // 调用 Class3`1[T].Method1(T)
+            _class3.Method1("AAA");
             Console.Out.WriteLine();
         }
 
-        // 调用 Class4.Method1<T>(T)
-        class1.Y!.Method1<Class1<char, char>>(new Class2<char, char>());
+        // 调用的是 Class4.Method1[T](T)
+        class1.Y!.Method1<char>('c');
     }
 }

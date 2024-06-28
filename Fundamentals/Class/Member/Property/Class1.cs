@@ -1,53 +1,82 @@
 namespace Fundamentals.Class.Member.Property;
 
+/// <summary>
+/// 属性的示例
+/// </summary>
 public class Class1
 {
     private const string TAG = "Class1";
 
-    private static int i = 1;
-    private int a;
-    private int b;
-    private int c;
+    // 支持字段
+    private int i = 0;
+    private string id;
+    private string name;
 
-    public static int I { get; set; }
+    /// <summary>
+    /// 声明一个静态的自动实现的属性并初始化该属性
+    /// </summary>
+    public static int Index { get; set; } = 1;
 
+    /// <summary>
+    /// 声明一个自动实现的读写属性
+    /// </summary>
     public int A { get; set; }
 
+    /// <summary>
+    /// 声明一个只读属性
+    /// </summary>
     public int B
     {
         get
         {
-            Console.WriteLine($"{TAG}: Class1.B.get, b = {b}");
-            return ++b;
-        }
-    }
-
-    public int C
-    {
-        set
-        {
-            Console.WriteLine($"{TAG}: Class1.C.set, value = {value}");
-            c = --value;
+            // 每次读取递增 1
+            return ++i;
         }
     }
 
     /// <summary>
-    /// 一元后缀 ! 运算符是 null 包容运算符, 用于取消表达式的所有可为 null 警告
-    /// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-forgiving
+    /// 声明一个只写属性
     /// </summary>
-    public object D { get; set; } = null!;
-
-    public Class1(int a, int b, int c)
+    public int Id
     {
-        this.A = a;
-        // this.B = b;
-        this.C = c;
+        set
+        {
+            if (value > 0)
+            {
+                // 支持字段 id 是 string 类型
+                id = $"id_{value}";
+            }
+        }
     }
 
-    public void Method1()
+    /// <summary>
+    /// 声明一个带有 get 和 init 访问器的属性
+    /// 其中 get 访问器设为 private
+    /// </summary>
+    public string Name
     {
-        Console.WriteLine($"{TAG}: Method1(), I = {I}, this.A = {this.A}, this.B = {this.B}, c = {c}");
-        // Console.WriteLine($"{TAG}: Method1(), this.D.GetType().ToString() = {this.D.GetType().ToString()}");
-        Console.WriteLine($"{TAG}: Method1(), this.D = {this.D}");
+        private get { return name; }
+        init { name = $"name_{value}"; }
+    }
+
+    /// <summary>
+    /// 使用表达式主体定义来实现只读属性
+    /// 只读属性可以将 get 访问器作为 expression-bodied 成员实现
+    /// </summary>
+    public string UserId => $"{id}-{name}";
+
+    public Class1(int id, string name)
+    {
+        // 调用 Id 的 set 访问器
+        Id = id;
+
+        // 调用 Name 的 init 访问器
+        Name = name;
+    }
+
+    public void Test()
+    {
+        // 调用 Name 的私有 get 访问器
+        Console.WriteLine($"{TAG}: Test(), Name = {Name}");
     }
 }
