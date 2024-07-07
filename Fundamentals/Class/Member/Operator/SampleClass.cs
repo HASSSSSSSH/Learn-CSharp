@@ -1,43 +1,60 @@
-#pragma warning disable CS0659
 #pragma warning disable CS0660, CS0661
 namespace Fundamentals.Class.Member.Operator;
 
-public class Class1
+/// <summary>
+/// 重载运算符的示例
+/// </summary>
+public class SampleClass
 {
-    private const string TAG = "Class1";
-
+    // 内部数组
     public int[] items;
 
-    public Class1(int capacity)
+    public SampleClass(int capacity)
     {
         items = new int[capacity];
     }
 
+    /// <summary>
+    /// 一个简单的索引器, 用于读取和写入 items 数组
+    /// </summary>
     public int this[int index]
     {
         get => items[index];
         set => items[index] = value;
     }
 
-    public static bool operator ==(Class1 a, Class1 b)
+    /// <summary>
+    /// 重载运算符 ==
+    /// </summary>
+    public static bool operator ==(SampleClass a, SampleClass b)
     {
         return Equals(a, b);
     }
 
-    public static bool operator !=(Class1 a, Class1 b)
+    /// <summary>
+    /// 重载运算符 !=
+    /// </summary>
+    public static bool operator !=(SampleClass a, SampleClass b)
     {
         return !Equals(a, b);
     }
 
+    /// <summary>
+    /// 判断类实例与 obj 的相等性
+    /// </summary>
     public override bool Equals(object? obj)
     {
-        return Equals(this, obj as Class1);
+        return Equals(this, obj as SampleClass);
     }
 
-    private static bool Equals(Class1 a, Class1 b)
+    /// <summary>
+    /// 判断相等性
+    /// </summary>
+    private static bool Equals(SampleClass a, SampleClass b)
     {
         if (ReferenceEquals(a, null))
         {
+            // 当 a 和 b 同时为 null 时, 返回 ture
             return ReferenceEquals(b, null);
         }
 

@@ -7,6 +7,9 @@ public class FieldTest
 {
     private const string TAG = "FieldTest";
 
+    /// <summary>
+    /// 使用类的字段
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
