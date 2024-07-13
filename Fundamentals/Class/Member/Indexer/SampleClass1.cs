@@ -17,6 +17,7 @@ public class SampleClass1
 
     /// <summary>
     /// 索引器
+    /// 将 get 和 set 访问器作为表达式主体成员实现
     /// </summary>
     public int this[int index]
     {

@@ -1,24 +1,31 @@
 namespace Fundamentals.Class.Member.Constructor;
 
+/// <summary>
+/// 构造函数示例
+/// </summary>
 public class Class1
 {
     private const string TAG = "Class1";
-    const int Default = 1;
 
+    /// <summary>
+    /// 静态构造函数
+    /// 没有访问修饰符, 没有参数
+    /// </summary>
     static Class1()
     {
         Console.WriteLine($"{TAG}: static Class1()");
     }
 
-    // public Class1() { }
+    // 不提供无参数构造函数
+    // public Class1()
+    // {
+    // }
 
-    public Class1(int a = Default)
+    /// <summary>
+    /// 实例构造函数
+    /// </summary>
+    public Class1(string name)
     {
-        Console.WriteLine($"{TAG}: Class1(int), a = {a}");
-    }
-
-    public Class1(int a, int b = Default)
-    {
-        Console.WriteLine($"{TAG}: Class1(int, int), a = {a}, b = {b}");
+        Console.WriteLine($"{TAG}: Class1(string), name = {name}");
     }
 }

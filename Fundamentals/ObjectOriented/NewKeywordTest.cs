@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Fundamentals.Class.Member.Method;
+namespace Fundamentals.ObjectOriented;
 
 [TestClass]
 public class NewKeywordTest
