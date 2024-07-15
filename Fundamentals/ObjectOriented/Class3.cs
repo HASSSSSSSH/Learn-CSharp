@@ -1,22 +1,42 @@
 namespace Fundamentals.ObjectOriented;
 
-public class Class3 : AbstractClass, IInterface
+/// <summary>
+/// Class3 派生自 <see cref="Class2"/>
+/// </summary>
+public class Class3 : Class2
 {
     private const string TAG = "Class3";
 
     /// <summary>
-    /// 同时重写 <see cref="AbstractClass.Method1(int)"/> 和 <see cref="IInterface.Method1(int)"/>
+    /// 重写 <see cref="Class2.Method1()"/>
+    /// 关键字 sealed 使得此方法不能再被继承
     /// </summary>
-    public override void Method1(int a)
+    public sealed override void Method1()
     {
-        Console.WriteLine($"{TAG}: Method1(int)");
+        // 调用的是自身和 AbstractClass 的 getTag()
+        Console.WriteLine($"{TAG}: Method1(), getTag() = {getTag()}, base.getTag() = {base.getTag()}");
+    }
+
+    // 由于 Class3 继承自 Class2, 不再必须重写此抽象方法
+    // public override void Method2()
+    // {
+    //     Console.WriteLine($"{TAG}: Method2()");
+    // }
+
+    /// <summary>
+    /// 重写虚方法 <see cref="AbstractClass.getName"/>
+    /// 关键字 sealed 使得此方法不能再被继承
+    /// </summary>
+    public sealed override string getName()
+    {
+        return TAG;
     }
 
     /// <summary>
-    /// 重写 <see cref="AbstractClass.getTag()"/>
-    /// 关键字 sealed 使得此方法不能再被继承
+    /// 使用 new 关键字声明与基类相同名称和签名的方法
+    /// 此方法是一个虚方法
     /// </summary>
-    public sealed override string getTag()
+    public new virtual string getTag()
     {
         return TAG;
     }

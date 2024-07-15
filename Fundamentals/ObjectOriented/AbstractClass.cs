@@ -1,5 +1,8 @@
 namespace Fundamentals.ObjectOriented;
 
+/// <summary>
+/// 抽象类示例
+/// </summary>
 public abstract class AbstractClass
 {
     private const string TAG = "AbstractClass";
@@ -7,25 +10,25 @@ public abstract class AbstractClass
     /// <summary>
     /// 抽象方法
     /// </summary>
-    public abstract void Method1(int a);
+    public abstract void Method1();
 
-    public string getMyTag()
-    {
-        return TAG;
-    }
+    /// <summary>
+    /// 抽象方法
+    /// </summary>
+    public abstract void Method2();
 
     /// <summary>
     /// 虚方法
     /// </summary>
-    public virtual string getTag()
+    public virtual string getName()
     {
         return TAG;
     }
 
     /// <summary>
-    /// 重写 <see cref="System.Object.ToString()"/>
+    /// 普通方法
     /// </summary>
-    public override string ToString()
+    public string getTag()
     {
         return TAG;
     }
