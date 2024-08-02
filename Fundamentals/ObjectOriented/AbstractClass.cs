@@ -20,7 +20,7 @@ public abstract class AbstractClass
     /// <summary>
     /// 虚方法
     /// </summary>
-    public virtual string getName()
+    public virtual string GetName()
     {
         return TAG;
     }
@@ -28,7 +28,7 @@ public abstract class AbstractClass
     /// <summary>
     /// 普通方法
     /// </summary>
-    public string getTag()
+    public string GetTag()
     {
         return TAG;
     }

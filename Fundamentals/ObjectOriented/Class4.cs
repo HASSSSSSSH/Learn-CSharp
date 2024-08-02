@@ -17,23 +17,25 @@ public class Class4 : Class3
     /// </summary>
     public override void Method2()
     {
-        Console.WriteLine($"{TAG}: Method2()");
+        // 分别调用 Class3 和 AbstractClass 的 GetTag()
+        Console.WriteLine($"{TAG}: Method2(), base.GetTag() = {base.GetTag()}," +
+                          $" (this as AbstractClass).GetTag() = {(this as AbstractClass).GetTag()}");
     }
 
     /// <summary>
-    /// 由于基类在 <see cref="Class3.getName()"/> 上使用 sealed 关键字, 使得此方法不能被重写
+    /// 由于基类在 <see cref="Class3.GetName"/> 上使用 sealed 关键字, 使得此方法不能被重写
     /// 仍然可以使用 new 关键字声明与基类相同名称和签名的方法
     /// 关键字 new 可以省略, 但是会产生编译器警告
     /// </summary>
-    public new string getName()
+    public new string GetName()
     {
         return TAG;
     }
 
     /// <summary>
-    /// 重写虚方法 <see cref="Class3.getTag()"/>
+    /// 重写虚方法 <see cref="Class3.GetTag"/>
     /// </summary>
-    public override string getTag()
+    public override string GetTag()
     {
         return TAG;
     }

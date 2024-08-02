@@ -12,8 +12,8 @@ public class Class2 : AbstractClass, ISampleInterface
     /// </summary>
     public override void Method1()
     {
-        // 分别调用自身和基类的 getTag()
-        Console.WriteLine($"{TAG}: Method1(), getTag() = {getTag()}, base.getTag() = {base.getTag()}");
+        // 分别调用自身和基类的 GetTag()
+        Console.WriteLine($"{TAG}: Method1(), GetTag() = {GetTag()}, base.GetTag() = {base.GetTag()}");
     }
 
     /// <summary>
@@ -31,10 +31,10 @@ public class Class2 : AbstractClass, ISampleInterface
     // }
 
     /// <summary>
-    /// 隐藏基类成员 <see cref="AbstractClass.getTag()"/>
+    /// 隐藏基类成员 <see cref="AbstractClass.GetTag"/>
     /// 注意, 此处访问修饰符为 private
     /// </summary>
-    private new string getTag()
+    private new string GetTag()
     {
         return TAG;
     }

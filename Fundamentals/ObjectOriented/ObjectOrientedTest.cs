@@ -28,11 +28,11 @@ public class ObjectOrientedTest
             sampleInterface.Method2("zzz");
         }
 
-        // 调用的是 AbstractClass.getTag()
-        Console.WriteLine($"{TAG}: class1.getTag() = {class1.getTag()}");
+        // 调用的是 AbstractClass.GetTag()
+        Console.WriteLine($"{TAG}: class1.GetTag() = {class1.GetTag()}");
 
-        // 调用的是 Class1.getName()
-        Console.WriteLine($"{TAG}: class1.getName() = {class1.getName()}");
+        // 调用的是 Class1.GetName()
+        Console.WriteLine($"{TAG}: class1.GetName() = {class1.GetName()}");
     }
 
     /// <summary>
@@ -53,11 +53,11 @@ public class ObjectOrientedTest
             sampleInterface.Method2("zzz");
         }
 
-        // 调用的是 AbstractClass.getTag()
-        Console.WriteLine($"{TAG}: class1.getTag() = {class2.getTag()}");
+        // 调用的是 AbstractClass.GetTag()
+        Console.WriteLine($"{TAG}: class1.GetTag() = {class2.GetTag()}");
 
-        // 调用的是 AbstractClass.getName()
-        Console.WriteLine($"{TAG}: class1.getName() = {class2.getName()}");
+        // 调用的是 AbstractClass.GetName()
+        Console.WriteLine($"{TAG}: class1.GetName() = {class2.GetName()}");
     }
 
     /// <summary>
@@ -75,14 +75,14 @@ public class ObjectOrientedTest
         // 调用的是 Class2.Method2()
         class3.Method2();
 
-        // 调用的是 AbstractClass.getTag()
-        Console.WriteLine($"{TAG}: class1.getTag() = {class3.getTag()}");
+        // 调用的是 AbstractClass.GetTag()
+        Console.WriteLine($"{TAG}: class1.GetTag() = {class3.GetTag()}");
 
-        // 调用的是 Class3.getTag()
-        Console.WriteLine($"{TAG}: (class3 as Class3)?.getTag() = {(class3 as Class3)?.getTag()}");
+        // 调用的是 Class3.GetTag()
+        Console.WriteLine($"{TAG}: (class3 as Class3)?.GetTag() = {(class3 as Class3)?.GetTag()}");
 
-        // 调用的是 Class3.getName()
-        Console.WriteLine($"{TAG}: class1.getName() = {class3.getName()}");
+        // 调用的是 Class3.GetName()
+        Console.WriteLine($"{TAG}: class1.GetName() = {class3.GetName()}");
     }
 
     /// <summary>
@@ -125,32 +125,32 @@ public class ObjectOrientedTest
         // 遵循虚拟继承的规则, 实际调用的是 Class4.Method2()
         abstractClass.Method2();
 
-        // 调用的是 Class4.getName()
-        Console.WriteLine($"{TAG}: class4.getName() = {class4.getName()}");
+        // 调用的是 Class4.GetName()
+        Console.WriteLine($"{TAG}: class4.GetName() = {class4.GetName()}");
 
-        // class3 实际运行时类型为 Class4, 但 Class4 没有重写 getName()
-        // 遵循虚拟继承的规则, 实际调用的是 Class3.getName()
-        Console.WriteLine($"{TAG}: class3.getName() = {class3.getName()}");
+        // class3 实际运行时类型为 Class4, 但 Class4 没有重写 GetName()
+        // 遵循虚拟继承的规则, 实际调用的是 Class3.GetName()
+        Console.WriteLine($"{TAG}: class3.GetName() = {class3.GetName()}");
 
-        // 遵循虚拟继承的规则, 实际调用的是 Class3.getName()
-        Console.WriteLine($"{TAG}: class2.getName() = {class2.getName()}");
+        // 遵循虚拟继承的规则, 实际调用的是 Class3.GetName()
+        Console.WriteLine($"{TAG}: class2.GetName() = {class2.GetName()}");
 
-        // 遵循虚拟继承的规则, 实际调用的是 Class3.getName()
-        Console.WriteLine($"{TAG}: abstractClass.getName() = {abstractClass.getName()}");
+        // 遵循虚拟继承的规则, 实际调用的是 Class3.GetName()
+        Console.WriteLine($"{TAG}: abstractClass.GetName() = {abstractClass.GetName()}");
 
-        // Class4 重写了 getTag(), 调用的是 Class4.getTag()
-        Console.WriteLine($"{TAG}: class4.getTag() = {class4.getTag()}");
+        // Class4 重写了 GetTag(), 调用的是 Class4.GetTag()
+        Console.WriteLine($"{TAG}: class4.GetTag() = {class4.GetTag()}");
 
-        // class3 实际运行时类型为 Class4, 并且 Class4 重写了 getTag()
-        // 遵循虚拟继承的规则, 实际调用的是 Class4.getTag()
-        Console.WriteLine($"{TAG}: class3.getTag() = {class3.getTag()}");
+        // class3 实际运行时类型为 Class4, 并且 Class4 重写了 GetTag()
+        // 遵循虚拟继承的规则, 实际调用的是 Class4.GetTag()
+        Console.WriteLine($"{TAG}: class3.GetTag() = {class3.GetTag()}");
 
-        // class2 实际运行时类型为 Class4, 而 Class2 将自身的 getTag() 声明为 private
-        // 在 getTag() 的虚拟继承层次结构中, 此处实际调用的是 AbstractClass.getTag()
-        Console.WriteLine($"{TAG}: class2.getTag() = {class2.getTag()}");
+        // class2 实际运行时类型为 Class4, 而 Class2 将自身的 GetTag() 声明为 private
+        // 在 GetTag() 的虚拟继承层次结构中, 此处实际调用的是 AbstractClass.GetTag()
+        Console.WriteLine($"{TAG}: class2.GetTag() = {class2.GetTag()}");
 
-        // 在 getTag() 的虚拟继承层次结构中, 此处实际调用的是 AbstractClass.getTag()
-        Console.WriteLine($"{TAG}: abstractClass.getTag() = {abstractClass.getTag()}");
+        // 在 GetTag() 的虚拟继承层次结构中, 此处实际调用的是 AbstractClass.GetTag()
+        Console.WriteLine($"{TAG}: abstractClass.GetTag() = {abstractClass.GetTag()}");
 
         if (class4 is ISampleInterface sampleInterface)
         {

@@ -12,8 +12,8 @@ public class Class1 : AbstractClass, ISampleInterface
     /// </summary>
     public override void Method1()
     {
-        // 分别调用自身和基类的 getName()
-        Console.WriteLine($"{TAG}: Method1(), getName() = {getName()}, base.getName() = {base.getName()}");
+        // 分别调用自身和基类的 GetName()
+        Console.WriteLine($"{TAG}: Method1(), GetName() = {GetName()}, base.GetName() = {base.GetName()}");
 
         // 都是调用自身的 Method2(string)
         // ISampleInterface sampleInterface = this;
@@ -39,9 +39,9 @@ public class Class1 : AbstractClass, ISampleInterface
     }
 
     /// <summary>
-    /// 重写虚方法 <see cref="AbstractClass.getName()"/>
+    /// 重写虚方法 <see cref="AbstractClass.GetName"/>
     /// </summary>
-    public override string getName()
+    public override string GetName()
     {
         return TAG;
     }

@@ -14,114 +14,75 @@ public class TypeTestingExample
     [TestMethod]
     public void TestMethod1()
     {
-        int a = 1;
-        int? b = default;
-        double? c = 3.14;
-        double d = a;
-        object obj = a;
-        Class2 instance1 = new Class2();
-        Class3 instance2 = new Class3();
+        int? a = 1;
+        int? b = null;
+        int c = 2;
+        long d = c;
+        object obj = c;
+        BaseClass instance1 = new BaseClass();
+        BaseClass instance2 = new DerivedClass();
+        object instance3 = new ImplementationClass();
 
-        Console.Out.WriteLine($"{TAG}: TestMethod1, a is int = {a is int}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, b is null = {b is null}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, c is not null = {c is not null}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, d is int = {d is int}");
+        // 返回 true, 因为 a 的基础类型为 int 并且不为 null
+        Console.Out.WriteLine($"{TAG}: (a is int) = {a is int}");
 
-        // is 运算符会考虑装箱和取消装箱转换, 但不会考虑数值转换
-        Console.Out.WriteLine($"{TAG}: TestMethod1, obj is Int32 = {obj is Int32}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, obj is long = {obj is long}");
+        // 返回 false, 因为 b 为 null
+        Console.Out.WriteLine($"{TAG}: (b is int?) = {b is int?}");
 
-        Console.Out.WriteLine($"{TAG}: TestMethod1, instance1 is Class1 = {instance1 is Class1}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, instance1 is IInterface = {instance1 is IInterface}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, instance2 is Class1 = {instance2 is Class1}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, instance2 is IInterface = {instance2 is IInterface}");
+        Console.Out.WriteLine($"{TAG}: (c is int) = {c is int}");
+
+        // is 运算符不会考虑隐式数值转换
+        Console.Out.WriteLine($"{TAG}: (d is int) = {d is int}");
+
+        // is 运算符会考虑装箱和取消装箱转换, 但不会考虑隐式数值转换
+        Console.Out.WriteLine($"{TAG}: (obj is int) = {obj is int}");
+        Console.Out.WriteLine($"{TAG}: (obj is long) = {obj is long}");
+        Console.Out.WriteLine($"{TAG}: (obj is IFormattable) = {obj is IFormattable}");
+
+        Console.Out.WriteLine($"{TAG}: (instance1 is object) = {instance1 is object}");
+        Console.Out.WriteLine($"{TAG}: (instance1 is BaseClass) = {instance1 is BaseClass}");
+        Console.Out.WriteLine($"{TAG}: (instance1 is DerivedClass) = {instance1 is DerivedClass}");
+        Console.Out.WriteLine($"{TAG}: (instance2 is BaseClass) = {instance2 is BaseClass}");
+        Console.Out.WriteLine($"{TAG}: (instance2 is DerivedClass) = {instance2 is DerivedClass}");
+        Console.Out.WriteLine($"{TAG}: (instance3 is ISampleInterface) = {instance3 is ISampleInterface}");
     }
 
     /// <summary>
-    /// is 运算符还会对照某个模式测试表达式结果
+    /// is 运算符可以根据某个模式测试表达式结果
     /// </summary>
     [TestMethod]
     public void TestMethod2()
     {
-        Class2 instance1 = new Class2();
-        Class3 instance2 = new Class3();
-        object[] objects = { instance1, instance2 };
+        object[] objects = { new DerivedClass(), new ImplementationClass() };
 
         foreach (var obj in objects)
         {
-            // 只有当类型测试成功时才会进行赋值给 instance
-            if (obj is Class1 instance)
+            if (obj is BaseClass instance)
             {
-                // 此时 instance 必定不等于 null
-                Console.Out.WriteLine($"{TAG}: TestMethod2, instance.A = {instance.A}");
+                // 当类型测试成功时, 将表达式结果分配给声明的变量 instance
+                Console.Out.WriteLine($"{TAG}: instance.GetTag() = {instance.GetTag()}");
             }
             else
             {
                 // 此时 instance = null
-                Console.WriteLine($"{TAG}: TestMethod2, {obj.GetType().Name} is not Class1");
+                Console.WriteLine($"{TAG}: {obj.GetType()} is not compatible with {typeof(BaseClass)}");
             }
         }
     }
 
     /// <summary>
-    /// 通过 as 运算符可以将表达式结果显式转换为给定类型 (如果表达式结果的运行时类型与给定类型兼容)
+    /// as 运算符可以将表达式结果显式转换为给定的类型 (如果表达式结果的运行时类型与给定类型兼容)
+    /// 如果无法进行转换, 则 as 运算符返回 null
     /// </summary>
     [TestMethod]
     public void TestMethod3()
     {
-        int a = 1;
-        double? b = default;
-        object obj1 = a;
-        object obj2 = b;
-        object instance1 = new Class2();
-        Class3 instance2 = new Class3();
+        object[] objects = { new DerivedClass(), new ImplementationClass() };
 
-        // 测试 obj1
-        var a1 = obj1 as int?;
-        if (a1 != null)
-        {
-            Console.Out.WriteLine($"{TAG}: TestMethod3, obj1 is int = {a1}");
-        }
-        else
-        {
-            Console.WriteLine($"{TAG}: TestMethod3, obj1 as int? = null");
-        }
-
-        // 测试 obj1
-        var a2 = obj1 as long?;
-        if (a2 != null)
-        {
-            Console.Out.WriteLine($"{TAG}: TestMethod3, obj1 is long = {a2}");
-        }
-        else
-        {
-            Console.WriteLine($"{TAG}: TestMethod3, obj1 as long? = null");
-        }
-
-        // 测试 obj2
-        var b1 = obj2 as double?;
-        if (b1 != null)
-        {
-            Console.Out.WriteLine($"{TAG}: TestMethod3, obj2 is double = {b1}");
-        }
-        else
-        {
-            Console.WriteLine($"{TAG}: TestMethod3, obj2 as double? = null");
-        }
-
-        // 测试 instance1, instance2
-        object[] objects = { instance1, instance2 };
         foreach (var obj in objects)
         {
-            var instance = obj as Class1;
-            if (instance != null)
-            {
-                Console.Out.WriteLine($"{TAG}: TestMethod3, instance.A = {instance.A}");
-            }
-            else
-            {
-                Console.WriteLine($"{TAG}: TestMethod3, {obj.GetType().Name} is not Class1");
-            }
+            // ?. 是 Null 条件运算符
+            Console.Out.WriteLine($"{TAG}: (obj as BaseClass)?.GetName() = {(obj as BaseClass)?.GetName()}");
         }
     }
 
@@ -131,45 +92,45 @@ public class TypeTestingExample
     [TestMethod]
     public void TestMethod4()
     {
-        void PrintType<T>() => Console.WriteLine(typeof(T));
+        Console.WriteLine($"typeof(int) = {typeof(int)}");
+        Console.WriteLine($"typeof(int?) = {PrintType<int?>()}");
+        Console.WriteLine($"typeof(object) = {PrintType<object>()}");
+        Console.WriteLine($"typeof(string) = {typeof(string)}");
 
-        PrintType<int>();
-        PrintType<Int32>();
-        PrintType<Dictionary<int, char>>();
+        // typeof 运算符不能用于可为 null 的引用类型
+        // Console.WriteLine($"typeof(string?) = {typeof(string?)}");
 
-        Console.WriteLine(typeof(int?));
-        // Console.WriteLine(typeof(string?));
-        Console.WriteLine(typeof(Dictionary<,>));
-        Console.WriteLine(typeof(List<string>));
+        Console.WriteLine($"typeof(Dictionary<,>) = {typeof(Dictionary<,>)}");
+        Console.WriteLine($"typeof(Dictionary<string, int>) = {typeof(Dictionary<string, int>)}");
+
+        // typeof 运算符的实参可以是类型形参
+        string PrintType<T>() => typeof(T).ToString();
     }
 
     /// <summary>
-    /// 通过 typeof 运算符进行类型检测
+    /// 使用 typeof 运算符进行类型测试
     /// </summary>
     [TestMethod]
     public void TestMethod5()
     {
-        object instance1 = new Class2();
-        Class3 instance2 = new Class3();
+        object instance1 = new DerivedClass();
+        ISampleInterface instance2 = new ImplementationClass();
+        IDictionary<string, int> instance3 = new Dictionary<string, int>();
 
-        // 给定 Class1 类型
-        Console.Out.WriteLine($"{TAG}: TestMethod5, instance1 is Class1 = {instance1 is Class1}");
-        Console.Out.WriteLine(
-            $"{TAG}: TestMethod5, (instance1.GetType() == typeof(Class1)) = {instance1.GetType() == typeof(Class1)}");
-
-        // 给定 IInterface 类型
-        Console.Out.WriteLine($"{TAG}: TestMethod5, instance1 is IInterface = {instance1 is IInterface}");
-        Console.Out.WriteLine(
-            $"{TAG}: TestMethod5, (instance1.GetType() == typeof(IInterface)) = {instance1.GetType() == typeof(IInterface)}");
-
-        // 给定 Class2 类型
-        Console.Out.WriteLine($"{TAG}: TestMethod5, instance1 is Class2 = {instance1 is Class2}");
-        Console.Out.WriteLine(
-            $"{TAG}: TestMethod5, (instance1.GetType() == typeof(Class2)) = {instance1.GetType() == typeof(Class2)}");
-
-        // 给定 Class3 类型
-        Console.Out.WriteLine($"{TAG}: TestMethod5, instance2 is Class3 = {instance2 is Class3}");
-        Console.Out.WriteLine(
-            $"{TAG}: TestMethod5, (instance2.GetType() == typeof(Class3)) = {instance2.GetType() == typeof(Class3)}");
+        // GetType 方法用于获取当前实例的运行时类型
+        Console.WriteLine($"(typeof(object) == instance1.GetType()) = {typeof(object) == instance1.GetType()}");
+        Console.WriteLine($"(typeof(BaseClass) == instance1.GetType()) = {typeof(BaseClass) == instance1.GetType()}");
+        Console.WriteLine(
+            $"(typeof(DerivedClass) == instance1.GetType()) = {typeof(DerivedClass) == instance1.GetType()}");
+        Console.WriteLine(
+            $"(typeof(ISampleInterface) == instance2.GetType()) = {typeof(ISampleInterface) == instance2.GetType()}");
+        Console.WriteLine(
+            $"(typeof(ImplementationClass) == instance2.GetType()) = {typeof(ImplementationClass) == instance2.GetType()}");
+        Console.WriteLine(
+            $"(typeof(IDictionary<string, int>) == instance3.GetType()) = {typeof(IDictionary<string, int>) == instance3.GetType()}");
+        Console.WriteLine(
+            $"(typeof(Dictionary<,>) == instance3.GetType()) = {typeof(Dictionary<,>) == instance3.GetType()}");
+        Console.WriteLine(
+            $"(typeof(Dictionary<string, int>) == instance3.GetType()) = {typeof(Dictionary<string, int>) == instance3.GetType()}");
     }
 }
