@@ -1,3 +1,4 @@
+using System.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Fundamentals.BoxingUnboxing;
@@ -7,6 +8,9 @@ public class BoxingUnboxingTest
 {
     private const string TAG = "BoxingUnboxingTest";
 
+    /// <summary>
+    /// 装箱和取消装箱 int 类型
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
@@ -22,28 +26,35 @@ public class BoxingUnboxingTest
         // 取消装箱
         int j = (int)obj;
 
-        Console.Out.WriteLine($"{TAG}: TestMethod1, i = {i}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, j = {j}");
-        Console.Out.WriteLine($"{TAG}: TestMethod1, concat string = \"{String.Concat("Answer", 42, true)}\"");
+        Console.Out.WriteLine($"{TAG}: i = {i}, j = {j}");
+    }
+
+    /// <summary>
+    /// 隐式对值类型进行装箱
+    /// </summary>
+    [TestMethod]
+    public void TestMethod2()
+    {
+        Console.Out.WriteLine($"{TAG}: concat string = \"{string.Concat("Answer", new Vector2(1, 1), true)}\"");
     }
 
     /// <summary>
     /// 尝试对 null 进行取消装箱会导致 NullReferenceException
     /// </summary>
     [TestMethod]
-    public void TestMethod2()
+    public void TestMethod3()
     {
-        int? i = default;
+        int? i = null;
         object obj = i;
 
         try
         {
             int j = (int)obj;
-            Console.Out.WriteLine($"{TAG}: TestMethod2, j = {j}");
+            Console.Out.WriteLine($"{TAG}: j = {j}");
         }
         catch (NullReferenceException e)
         {
-            Console.Out.WriteLine($"{TAG}: TestMethod2 throw NullReferenceException, e = {e}");
+            Console.Out.WriteLine($"{TAG}: throw NullReferenceException, e = {e}");
         }
     }
 
@@ -51,7 +62,7 @@ public class BoxingUnboxingTest
     /// 尝试对不兼容值类型的引用进行取消装箱会导致 InvalidCastException
     /// </summary>
     [TestMethod]
-    public void TestMethod3()
+    public void TestMethod4()
     {
         int i = 123;
         object obj = i;
@@ -59,21 +70,21 @@ public class BoxingUnboxingTest
         try
         {
             long j = (long)obj;
-            Console.Out.WriteLine($"{TAG}: TestMethod3, j = {j}");
+            Console.Out.WriteLine($"{TAG}: j = {j}");
         }
         catch (InvalidCastException e)
         {
-            Console.Out.WriteLine($"{TAG}: TestMethod3 throw InvalidCastException, e = {e}");
+            Console.Out.WriteLine($"{TAG}: throw InvalidCastException, e = {e}");
         }
 
         try
         {
             int k = (short)obj;
-            Console.Out.WriteLine($"{TAG}: TestMethod3, k = {k}");
+            Console.Out.WriteLine($"{TAG}: k = {k}");
         }
         catch (InvalidCastException e)
         {
-            Console.Out.WriteLine($"{TAG}: TestMethod3 throw InvalidCastException, e = {e}");
+            Console.Out.WriteLine($"{TAG}: throw InvalidCastException, e = {e}");
         }
     }
 }

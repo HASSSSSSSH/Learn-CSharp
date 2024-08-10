@@ -5,16 +5,22 @@ namespace Fundamentals.Exception;
 [TestClass]
 public class ExceptionTest
 {
+    /// <summary>
+    /// 引发和捕获异常
+    /// </summary>
     [TestMethod]
     public void TestMethod1()
     {
         try
         {
-            MethodThrowException();
+            TestThrow();
         }
         catch (CustomException e)
         {
             Console.WriteLine($"throw CustomException: {e}");
+
+            // 使用 throw 关键字可以再次抛出该异常
+            // throw;
         }
     }
 
@@ -44,9 +50,9 @@ public class ExceptionTest
         Console.WriteLine($"TestFinally3() return {value3}");
     }
 
-    private void MethodThrowException()
+    private void TestThrow()
     {
-        throw new CustomException("an exception message");
+        throw new CustomException("Test");
     }
 
     private int TestFinally1()
@@ -54,7 +60,7 @@ public class ExceptionTest
         try
         {
             Console.WriteLine("In the try block");
-            MethodThrowException();
+            TestThrow();
             return 0;
         }
         finally
@@ -66,7 +72,7 @@ public class ExceptionTest
         }
 
         // 永远不会执行到这段代码
-        // return 1;
+        return 1;
     }
 
     private int TestFinally2()
@@ -82,7 +88,7 @@ public class ExceptionTest
         }
 
         // 永远不会执行到这段代码
-        // return 1;
+        return 1;
     }
 
     private int TestFinally3()

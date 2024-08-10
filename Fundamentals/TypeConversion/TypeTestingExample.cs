@@ -133,4 +133,32 @@ public class TypeTestingExample
         Console.WriteLine(
             $"(typeof(Dictionary<string, int>) == instance3.GetType()) = {typeof(Dictionary<string, int>) == instance3.GetType()}");
     }
+
+    /// <summary>
+    /// 测试 System.Type 的引用相等性
+    /// </summary>
+    [TestMethod]
+    public void TestMethod6()
+    {
+        Type typeInt1 = typeof(int);
+        Type typeInt2 = typeof(int);
+        Type typeInt3 = 0.GetType();
+        Type typeNullableInt = typeof(int?);
+
+        Console.WriteLine($"ReferenceEquals(typeInt1, typeInt2) = {ReferenceEquals(typeInt1, typeInt2)}");
+        Console.WriteLine($"ReferenceEquals(typeInt1, typeInt3) = {ReferenceEquals(typeInt1, typeInt3)}");
+        Console.WriteLine($"ReferenceEquals(typeInt1, typeNullableInt) = {ReferenceEquals(typeInt1, typeNullableInt)}");
+
+        Type type1 = typeof(Dictionary<,>);
+        Type type2 = typeof(Dictionary<int, long>);
+        Type type3 = typeof(Dictionary<string, object>);
+        Type type4 = typeof(Dictionary<int, string>);
+        var dictionary = new Dictionary<int, string>();
+        Type type5 = dictionary.GetType();
+
+        Console.WriteLine($"ReferenceEquals(type1, type2) = {ReferenceEquals(type1, type2)}");
+        Console.WriteLine($"ReferenceEquals(type2, type3) = {ReferenceEquals(type2, type3)}");
+        Console.WriteLine($"ReferenceEquals(type3, type4) = {ReferenceEquals(type3, type4)}");
+        Console.WriteLine($"ReferenceEquals(type4, type5) = {ReferenceEquals(type4, type5)}");
+    }
 }
