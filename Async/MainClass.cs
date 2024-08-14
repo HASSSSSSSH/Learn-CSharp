@@ -23,6 +23,9 @@ public class MainClass
         // await Task.Delay(5000);
     }
 
+    /// <summary>
+    /// 输出带有时间的日志
+    /// </summary>
     public static void Log(string log)
     {
         DateTime dateTime = DateTime.Now;
